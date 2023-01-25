@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { select, State, Store } from '@ngrx/store';
-import { map, of, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import * as Actions from '../app/store/actions';
 import * as Selectors from '../app/store/selectors';
@@ -12,13 +11,10 @@ import * as Selectors from '../app/store/selectors';
 })
 export class AppComponent implements OnInit {
   title = 'threethingstodoinlife_ui';
-  items$ = of([1, 2, 3]);
+  items$ = this.store.select(Selectors.selectItemList);
+  loading$ = this.store.select(Selectors.selectIsLoading);
 
-  constructor(private store: Store) {
-    this.items$ = store.select(Selectors.selectItemList).pipe(
-      tap(console.log)
-    );
-  }
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(Actions.load());

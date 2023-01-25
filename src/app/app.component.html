@@ -1,8 +1,10 @@
-
 <router-outlet></router-outlet>
 
-<app-item-list [items]="items$ | async">
+<div *ngIf="loading$ | async">loading</div>
+
+<ng-container *ngIf="items$ | async as items">
+  <app-item-list [items]="items">
     <ng-template let-item>
-        <app-item [item]="item"></app-item>
-    </ng-template>
-</app-item-list>
+      <app-item [item]="item"></app-item>
+    </ng-template> </app-item-list
+></ng-container>

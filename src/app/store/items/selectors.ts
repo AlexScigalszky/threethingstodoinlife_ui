@@ -7,3 +7,8 @@ export const selectItemList = createSelector(
   getUserFeatureState,
   (state: ItemsState) => state.items
 );
+
+export const selectIsLoading = createSelector(
+  getUserFeatureState,
+  (state: ItemsState) => state.loading
+);
