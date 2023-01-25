@@ -7,8 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 
-import { counterReducer } from './counter.reducer';
-import { itemReducer } from './store/reducer';
+import { ROOT_REDUCERS } from './store/reducer';
 import { MyCounterComponent } from './my-counter/my-counter.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
@@ -21,16 +20,16 @@ import { ItemEffects } from './store/items/effects';
     MyCounterComponent,
     ItemListComponent,
     ItemComponent,
-    MyCounterComponent
+    MyCounterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot([itemReducer]),
-    EffectsModule.forRoot([ItemEffects])
+    StoreModule.forRoot(ROOT_REDUCERS),
+    EffectsModule.forRoot([ItemEffects]),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
