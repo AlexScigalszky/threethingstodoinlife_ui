@@ -19,7 +19,7 @@ jobs:
 
       - name: Install and build
         working-directory: ./
-        run: npm install && npm run gh-build && cp dist/threethingstodoinlife_ui/index.html dist/threethingstodoinlife_ui/404.html
+        run: npm install && npm run gh-build && ls && cp dist/threethingstodoinlife_ui/index.html dist/threethingstodoinlife_ui/404.html
       
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
