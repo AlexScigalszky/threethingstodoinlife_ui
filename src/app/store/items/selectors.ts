@@ -12,3 +12,8 @@ export const selectIsLoading = createSelector(
   getUserFeatureState,
   (state: ItemsState) => state.loading
 );
+
+export const selectFormValues = createSelector(
+  getUserFeatureState,
+  (state: ItemsState) => state.threeThingsForm
+);

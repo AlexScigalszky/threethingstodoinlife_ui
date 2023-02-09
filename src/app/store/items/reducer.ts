@@ -1,15 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
 import { Item } from 'src/app/models/item';
+import { NewItem } from 'src/app/models/new-item';
 import * as ItemActions from './actions';
 
 export type ItemsState = {
   items: Item[];
   loading: boolean;
+  threeThingsForm: NewItem;
 };
 
 export const initialState: ItemsState = {
   items: [],
   loading: false,
+  threeThingsForm: {
+    first: '',
+    second: '',
+    third: '',
+  },
 };
 
 export const itemReducer = createReducer(
@@ -41,6 +48,27 @@ export const itemReducer = createReducer(
     loading: true,
   })),
   on(ItemActions.unvoteFailure, (state) => ({
+    ...state,
+    loading: false,
+  })),
+  on(ItemActions.newItemFormChange, (state, formValues) => ({
+    ...state,
+    threeThingsForm: { ...formValues },
+  })),
+  on(ItemActions.newItem, (state) => ({
+    ...state,
+    loading: false,
+  })),
+  on(ItemActions.newItemSuccess, (state) => ({
+    ...state,
+    loading: true,
+    threeThingsForm: {
+      first: '',
+      second: '',
+      third: '',
+    },
+  })),
+  on(ItemActions.newItemFailure, (state) => ({
     ...state,
     loading: false,
   }))

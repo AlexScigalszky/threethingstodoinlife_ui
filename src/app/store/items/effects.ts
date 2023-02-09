@@ -12,7 +12,7 @@ export class ItemEffects {
 
   loadItems$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ItemActions.load, ItemActions.voteSuccess, ItemActions.unvoteSuccess),
+      ofType(ItemActions.load, ItemActions.voteSuccess, ItemActions.unvoteSuccess, ItemActions.newItemSuccess),
       mergeMap(() =>
         this.itemsService.getAll().pipe(
           map((items) => ItemActions.loadSuccess({ items: items })),
@@ -41,6 +41,18 @@ export class ItemEffects {
         this.itemsService.unvote(identifier).pipe(
           map(() => ItemActions.unvoteSuccess()),
           catchError((err) => of(ItemActions.unvoteFailure()))
+        )
+      )
+    )
+  );
+
+  newItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ItemActions.newItem),
+      mergeMap((item) =>
+        this.itemsService.add(item).pipe(
+          map(() => ItemActions.newItemSuccess()),
+          catchError((err) => of(ItemActions.newItemFailure()))
         )
       )
     )

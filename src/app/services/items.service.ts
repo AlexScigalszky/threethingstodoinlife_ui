@@ -2,20 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Item } from '../models/item';
+import { NewItem } from '../models/new-item';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ItemsService {
   headers: any;
+
   constructor(private http: HttpClient) {
     this.headers = {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache',
-      'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
+      Pragma: 'no-cache',
+      Expires: 'Sat, 01 Jan 2000 00:00:00 GMT',
     };
   }
 
@@ -28,17 +30,29 @@ export class ItemsService {
   vote(identifier: string): Observable<void> {
     return this.http.post<void>(
       'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-add',
-      { identifier },{
-        headers: this.headers
+      { identifier },
+      {
+        headers: this.headers,
       }
     );
   }
-  
+
   unvote(identifier: string): Observable<void> {
     return this.http.post<void>(
       'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-remove',
-      { identifier },{
-        headers: this.headers
+      { identifier },
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
+  add(item: NewItem) {
+    return this.http.post<void>(
+      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/threethings-add',
+      { ...item },
+      {
+        headers: this.headers,
       }
     );
   }

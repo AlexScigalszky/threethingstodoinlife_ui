@@ -13,6 +13,9 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { ItemComponent } from './components/item/item.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ItemEffects } from './store/items/effects';
+import { TextInputComponent } from './components/text-input/text-input.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TodoFormComponent } from './components/todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,8 @@ import { ItemEffects } from './store/items/effects';
     ItemListComponent,
     ItemComponent,
     MyCounterComponent,
+    TextInputComponent,
+    TodoFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +33,8 @@ import { ItemEffects } from './store/items/effects';
     HttpClientModule,
     StoreModule.forRoot(ROOT_REDUCERS),
     EffectsModule.forRoot([ItemEffects]),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

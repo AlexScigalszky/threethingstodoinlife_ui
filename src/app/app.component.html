@@ -1,14 +1,22 @@
 <router-outlet></router-outlet>
 
+<div>
+  <app-todo-form
+    [values]="formValues$ | async"
+    (onChanged)="changed($event)"
+    (onSubmited)="addNewItem($event)"
+  ></app-todo-form>
+</div>
+
 <div *ngIf="loading$ | async">loading</div>
 
 <ng-container *ngIf="items$ | async as items">
   <app-item-list [items]="items">
     <ng-template let-item>
-      <app-item 
+      <app-item
         [item]="item"
         (onVote)="vote($event)"
         (onUnvote)="unvote($event)"
-        ></app-item>
+      ></app-item>
     </ng-template> </app-item-list
 ></ng-container>
