@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   vote(identifier: string): void {
-    console.log('vote')
     this.store.dispatch(Actions.vote({ identifier }));
   }
 

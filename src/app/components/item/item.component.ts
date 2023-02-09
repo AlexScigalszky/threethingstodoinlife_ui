@@ -7,8 +7,8 @@ import { Item } from 'src/app/models/item';
     <div *ngIf="item">
       <h3>
         {{ item.favorites }} Votes
-        <button (click)="vote()">Vote</button>
-        <button (click)="unvote()">Un vote</button>
+        <button (click)="vote()">Vote Up</button>
+        <button (click)="unvote()">Vote Down</button>
       </h3>
       <ul>
         <li>{{ item.first }}</li>
