@@ -19,4 +19,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(Actions.load());
   }
+
+  vote(identifier: string): void {
+    console.log('vote')
+    this.store.dispatch(Actions.vote({ identifier }));
+  }
+
+  unvote(identifier: string): void {
+    this.store.dispatch(Actions.unvote({ identifier }));
+  }
 }

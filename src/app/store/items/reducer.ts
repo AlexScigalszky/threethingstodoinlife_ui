@@ -27,5 +27,21 @@ export const itemReducer = createReducer(
     ...state,
     items: [],
     loading: false,
+  })),
+  on(ItemActions.vote, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(ItemActions.voteFailure, (state) => ({
+    ...state,
+    loading: false,
+  })),
+  on(ItemActions.unvote, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(ItemActions.unvoteFailure, (state) => ({
+    ...state,
+    loading: false,
   }))
 );
