@@ -24,15 +24,17 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+      
     return this.store.select(Selectors.selectIsAuthenticated).pipe(
       take(1),
       mergeMap((fund) => {
         if (fund) {
-          return of(fund);
+          
         } else {
+          console.log('auth guard')
           this.router.navigate(['/login']);
-          return EMPTY;
         }
+        return of(fund);
       })
     );
   }

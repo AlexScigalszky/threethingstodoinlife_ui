@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  SocialAuthService,
   GoogleLoginProvider,
   SocialUser,
 } from '@abacritt/angularx-social-login';
 import { Store } from '@ngrx/store';
 import * as Actions from '../../store/actions';
+import * as Selectors from '../../store/selectors';
 import { Router } from '@angular/router';
+import { distinctUntilChanged, filter, skip } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -38,17 +39,14 @@ import { Router } from '@angular/router';
           <p class="card-text">{{ user.email }}</p>
           <p class="card-text">Logged in with {{ user.provider }}</p>
         </div>
-        <div class="card-block">
-          <button class="btn btn-danger" (click)="signOut()">Sign out</button>
-        </div>
-        <div
+        <!-- <div
           class="card-block"
           *ngIf="user.provider === GoogleLoginProvider.PROVIDER_ID"
         >
           <button class="btn" (click)="refreshGoogleToken()">
             Refresh google token
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   `,
@@ -56,26 +54,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   user: SocialUser | undefined;
-  GoogleLoginProvider = GoogleLoginProvider;
+  // GoogleLoginProvider = GoogleLoginProvider;
 
-  constructor(
-    private readonly _authService: SocialAuthService,
-    private store: Store,
-    private router: Router
-  ) {}
+  constructor(private store: Store, private router: Router) {}
 
-  signOut(): void {
-    this._authService.signOut();
-  }
-
-  refreshGoogleToken(): void {
-    this._authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
-  }
+  // refreshGoogleToken(): void {
+  //   this.store.dispatch(Actions.refreshAuthToken());
+  // }
 
   ngOnInit(): void {
-    this._authService.authState.subscribe((user) => {
-      this.store.dispatch(Actions.login(user));
-      this.router.navigate(['/']);
-    });
   }
 }
