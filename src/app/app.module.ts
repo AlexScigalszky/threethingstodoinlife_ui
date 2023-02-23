@@ -26,7 +26,6 @@ import {
 } from '@abacritt/angularx-social-login';
 import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/index/index.component';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -48,8 +47,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     EffectsModule.forRoot(EFFECTS),
     FormsModule,
     ReactiveFormsModule,
-    SocialLoginModule,
-    StoreDevtoolsModule,
+    SocialLoginModule
   ],
   providers: [
     {
