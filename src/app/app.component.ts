@@ -31,8 +31,4 @@ export class AppComponent implements OnInit {
     this.store.dispatch(Actions.logout());
     this.router.navigate(['/login']);
   }
-
-  chau() {
-    this.router.navigate(['/login']);
-  }
 }
