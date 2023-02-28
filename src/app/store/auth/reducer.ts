@@ -4,7 +4,7 @@ import * as AuthActions from './actions';
 
 export type AuthState = {
   user: User | null;
-  logged: boolean
+  logged: boolean;
 };
 
 export const initialState: AuthState = {

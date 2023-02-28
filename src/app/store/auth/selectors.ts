@@ -15,3 +15,13 @@ export const selectUsername = createSelector(authState, (state: AuthState) => {
   }
   return null;
 });
+
+export const selectUserIdentifier = createSelector(
+  authState,
+  (state: AuthState) => {
+    if (state.user?.id) {
+      return state.user?.id;
+    }
+    return null;
+  }
+);

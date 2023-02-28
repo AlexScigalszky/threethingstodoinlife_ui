@@ -16,6 +16,7 @@ export const initialState: ItemsState = {
     first: '',
     second: '',
     third: '',
+    userIdentifier: '',
   },
 };
 
@@ -66,6 +67,7 @@ export const itemReducer = createReducer(
       first: '',
       second: '',
       third: '',
+      userIdentifier: '',
     },
   })),
   on(ItemActions.newItemFailure, (state) => ({

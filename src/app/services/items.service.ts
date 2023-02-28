@@ -27,30 +27,33 @@ export class ItemsService {
     );
   }
 
-  vote(identifier: string): Observable<void> {
+  vote(identifier: string, userIdentifier: string): Observable<void> {
     return this.http.post<void>(
       'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-add',
-      { identifier },
+      { identifier, userIdentifier },
       {
         headers: this.headers,
       }
     );
   }
 
-  unvote(identifier: string): Observable<void> {
+  unvote(identifier: string, userIdentifier: string): Observable<void> {
     return this.http.post<void>(
       'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-remove',
-      { identifier },
+      { identifier, userIdentifier },
       {
         headers: this.headers,
       }
     );
   }
 
-  add(item: NewItem) {
+  add(item: NewItem, userIdentifier: string) {
     return this.http.post<void>(
       'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/threethings-add',
-      { ...item },
+      {
+        ...item,
+        userIdentifier
+      },
       {
         headers: this.headers,
       }

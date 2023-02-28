@@ -7,8 +7,10 @@ import { Item } from 'src/app/models/item';
     <div *ngIf="item">
       <h3>
         {{ item.favorites }} Votes
-        <button (click)="vote()">Vote Up</button>
-        <button (click)="unvote()">Vote Down</button>
+        <div *ngIf="isAuthenticated">
+          <button (click)="vote()">Vote Up</button>
+          <button (click)="unvote()">Vote Down</button>
+        </div>
       </h3>
       <ul>
         <li>{{ item.first }}</li>
@@ -21,6 +23,7 @@ import { Item } from 'src/app/models/item';
 })
 export class ItemComponent {
   @Input() item?: Item;
+  @Input() isAuthenticated: boolean | null = false;
   @Output() onVote = new EventEmitter<string>();
   @Output() onUnvote = new EventEmitter<string>();
 

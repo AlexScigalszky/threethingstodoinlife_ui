@@ -1,22 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
+import {
+  map,
+  mergeMap,
+  catchError,
+  tap,
+  withLatestFrom,
+  filter,
+} from 'rxjs/operators';
 import { ItemsService } from 'src/app/services/items.service';
-import * as ItemActions from './actions';
+import * as AllActions from './actions';
+import * as AllSelectors from '../selectors';
 
 @Injectable()
 export class ItemEffects {
-
-  constructor(private actions$: Actions, private itemsService: ItemsService) {}
+  constructor(
+    private actions$: Actions,
+    private itemsService: ItemsService,
+    private store: Store
+  ) {}
 
   loadItems$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ItemActions.load, ItemActions.voteSuccess, ItemActions.unvoteSuccess, ItemActions.newItemSuccess),
+      ofType(
+        AllActions.load,
+        AllActions.voteSuccess,
+        AllActions.unvoteSuccess,
+        AllActions.newItemSuccess
+      ),
       mergeMap(() =>
         this.itemsService.getAll().pipe(
-          map((items) => ItemActions.loadSuccess({ items: items })),
-          catchError(() => of(ItemActions.loadFailure()))
+          map((items) => AllActions.loadSuccess({ items: items })),
+          catchError(() => of(AllActions.loadFailure()))
         )
       )
     )
@@ -24,11 +41,13 @@ export class ItemEffects {
 
   voteItem$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ItemActions.vote),
-      mergeMap(({identifier}) =>
-        this.itemsService.vote(identifier).pipe(
-          map(() => ItemActions.voteSuccess()),
-          catchError((err) => of(ItemActions.voteFailure()))
+      ofType(AllActions.vote),
+      withLatestFrom(this.store.select(AllSelectors.selectUserIdentifier)),
+      filter(([item, userIdentifier]) => userIdentifier !== null),
+      mergeMap(([{ identifier }, userIdentifier]) =>
+        this.itemsService.vote(identifier, userIdentifier!).pipe(
+          map(() => AllActions.voteSuccess()),
+          catchError((err) => of(AllActions.voteFailure()))
         )
       )
     )
@@ -36,11 +55,13 @@ export class ItemEffects {
 
   unvoteItem$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ItemActions.unvote),
-      mergeMap(({identifier}) =>
-        this.itemsService.unvote(identifier).pipe(
-          map(() => ItemActions.unvoteSuccess()),
-          catchError((err) => of(ItemActions.unvoteFailure()))
+      ofType(AllActions.unvote),
+      withLatestFrom(this.store.select(AllSelectors.selectUserIdentifier)),
+      filter(([item, userIdentifier]) => userIdentifier !== null),
+      mergeMap(([{ identifier }, userIdentifier]) =>
+        this.itemsService.unvote(identifier, userIdentifier!).pipe(
+          map(() => AllActions.unvoteSuccess()),
+          catchError((err) => of(AllActions.unvoteFailure()))
         )
       )
     )
@@ -48,13 +69,15 @@ export class ItemEffects {
 
   newItem$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ItemActions.newItem),
-      mergeMap((item) =>
-        this.itemsService.add(item).pipe(
-          map(() => ItemActions.newItemSuccess()),
-          catchError((err) => of(ItemActions.newItemFailure()))
-        )
-      )
+      ofType(AllActions.newItem),
+      withLatestFrom(this.store.select(AllSelectors.selectUserIdentifier)),
+      filter(([item, userIdentifier]) => userIdentifier !== null),
+      mergeMap(([item, userIdentifier]) => {
+        return this.itemsService.add(item, userIdentifier!).pipe(
+          map(() => AllActions.newItemSuccess()),
+          catchError((err) => of(AllActions.newItemFailure()))
+        );
+      })
     )
   );
 }

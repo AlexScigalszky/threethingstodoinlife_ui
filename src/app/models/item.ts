@@ -4,4 +4,5 @@ export interface Item {
   second: string;
   third: string;
   favorites: number;
+  userIdentifier: string;
 }
