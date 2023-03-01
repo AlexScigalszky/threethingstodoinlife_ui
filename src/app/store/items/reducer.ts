@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { Item } from 'src/app/models/item';
+import { Item, ItemStore } from 'src/app/models/item';
 import { NewItem } from 'src/app/models/new-item';
-import * as ItemActions from './actions';
+import * as AllActions from '../actions';
 
 export type ItemsState = {
-  items: Item[];
+  items: ItemStore[];
   loading: boolean;
   threeThingsForm: NewItem;
 };
@@ -22,45 +22,64 @@ export const initialState: ItemsState = {
 
 export const itemReducer = createReducer(
   initialState,
-  on(ItemActions.load, (state) => ({
+  on(AllActions.load, (state) => ({
     ...state,
     loading: true,
   })),
-  on(ItemActions.loadSuccess, (state, action) => ({
+  on(AllActions.loadSuccess, (state, action) => ({
     ...state,
-    items: action.items,
+    items: action.items.map((item) => ({
+      ...item,
+      dones: {
+        first: null,
+        second: null,
+        third: null,
+      },
+    })),
     loading: false,
   })),
-  on(ItemActions.loadFailure, (state) => ({
+  on(AllActions.loadUserDonesSuccess, (state, action) => ({
+    ...state,
+    items: state.items.map((item) => ({
+      ...item,
+      dones: {
+        first: action.dones.filter((d) => d.doneFirst == true).length > 0,
+        second: action.dones.filter((d) => d.doneSecond == true).length > 0,
+        third: action.dones.filter((d) => d.doneThird == true).length > 0,
+      },
+    })),
+    loading: false,
+  })),
+  on(AllActions.loadFailure, (state) => ({
     ...state,
     items: [],
     loading: false,
   })),
-  on(ItemActions.vote, (state) => ({
+  on(AllActions.vote, (state) => ({
     ...state,
     loading: true,
   })),
-  on(ItemActions.voteFailure, (state) => ({
+  on(AllActions.voteFailure, (state) => ({
     ...state,
     loading: false,
   })),
-  on(ItemActions.unvote, (state) => ({
+  on(AllActions.unvote, (state) => ({
     ...state,
     loading: true,
   })),
-  on(ItemActions.unvoteFailure, (state) => ({
+  on(AllActions.unvoteFailure, (state) => ({
     ...state,
     loading: false,
   })),
-  on(ItemActions.newItemFormChange, (state, formValues) => ({
+  on(AllActions.newItemFormChange, (state, formValues) => ({
     ...state,
     threeThingsForm: { ...formValues },
   })),
-  on(ItemActions.newItem, (state) => ({
+  on(AllActions.newItem, (state) => ({
     ...state,
     loading: false,
   })),
-  on(ItemActions.newItemSuccess, (state) => ({
+  on(AllActions.newItemSuccess, (state) => ({
     ...state,
     loading: true,
     threeThingsForm: {
@@ -70,7 +89,7 @@ export const itemReducer = createReducer(
       userIdentifier: '',
     },
   })),
-  on(ItemActions.newItemFailure, (state) => ({
+  on(AllActions.newItemFailure, (state) => ({
     ...state,
     loading: false,
   }))

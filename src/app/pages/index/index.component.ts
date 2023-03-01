@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, startWith } from 'rxjs';
+import { distinctUntilChanged, filter, startWith, take } from 'rxjs';
 
 import * as Actions from '../../store/actions';
 import * as Selectors from '../../store/selectors';
 import { NewItem } from '../../models/new-item';
+import { MarkAsDone } from 'src/app/types/mark_as_done.type';
 
 @Component({
   selector: 'app-index',
@@ -27,6 +28,8 @@ import { NewItem } from '../../models/new-item';
               [item]="item"
               (onVote)="vote($event)"
               (onUnvote)="unvote($event)"
+              (onMarkAsDone)="markAsDone($event)"
+              (onMarkAsUndone)="markAsUndone($event)"
               [isAuthenticated]="data.isAuthenticated"
             ></app-item>
           </ng-template>
@@ -45,6 +48,10 @@ export class IndexComponent implements OnInit {
   isAuthenticated$ = this.store
     .select(Selectors.selectIsAuthenticated)
     .pipe(startWith(false));
+  userIdentifier$ = this.store.select(Selectors.selectUserIdentifier).pipe(
+    filter((userIdentifier) => userIdentifier !== null),
+    take(1)
+  );
 
   constructor(private store: Store) {}
 
@@ -66,5 +73,27 @@ export class IndexComponent implements OnInit {
 
   addNewItem(newItem: NewItem) {
     this.store.dispatch(Actions.newItem(newItem));
+  }
+
+  markAsDone(data: MarkAsDone): void {
+    this.userIdentifier$.subscribe((userIdentifier) => {
+      this.store.dispatch(
+        Actions.markAsDone({
+          ...data,
+          userIdentifier: userIdentifier!,
+        })
+      );
+    });
+  }
+
+  markAsUndone(data: MarkAsDone): void {
+    this.userIdentifier$.subscribe((userIdentifier) => {
+      this.store.dispatch(
+        Actions.markAsUndone({
+          ...data,
+          userIdentifier: userIdentifier!,
+        })
+      );
+    });
   }
 }

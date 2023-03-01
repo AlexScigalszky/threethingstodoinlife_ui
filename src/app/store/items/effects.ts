@@ -10,8 +10,9 @@ import {
   withLatestFrom,
   filter,
 } from 'rxjs/operators';
+import { DoneService } from 'src/app/services/done.service';
 import { ItemsService } from 'src/app/services/items.service';
-import * as AllActions from './actions';
+import * as AllActions from '../actions';
 import * as AllSelectors from '../selectors';
 
 @Injectable()
@@ -19,6 +20,7 @@ export class ItemEffects {
   constructor(
     private actions$: Actions,
     private itemsService: ItemsService,
+    private readonly doneService: DoneService,
     private store: Store
   ) {}
 
@@ -34,6 +36,20 @@ export class ItemEffects {
         this.itemsService.getAll().pipe(
           map((items) => AllActions.loadSuccess({ items: items })),
           catchError(() => of(AllActions.loadFailure()))
+        )
+      )
+    )
+  );
+
+  loadDones$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AllActions.loadUserDones, AllActions.loadSuccess),
+      withLatestFrom(this.store.select(AllSelectors.selectUserIdentifier)),
+      filter(([_, userIdentifier]) => userIdentifier !== null),
+      mergeMap(([_, userIdentifier]) =>
+        this.doneService.getByUser(userIdentifier).pipe(
+          map((dones) => AllActions.loadUserDonesSuccess({ dones })),
+          catchError(() => of(AllActions.loadUserDonesFailure()))
         )
       )
     )
@@ -78,6 +94,30 @@ export class ItemEffects {
           catchError((err) => of(AllActions.newItemFailure()))
         );
       })
+    )
+  );
+
+  markAsDone$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AllActions.markAsDone),
+      mergeMap((data) =>
+        of(this.doneService.markAsDone(data)).pipe(
+          map(() => AllActions.markAsDoneSuccess()),
+          catchError(() => of(AllActions.markAsDoneFailure()))
+        )
+      )
+    )
+  );
+
+  markAsUndone$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AllActions.markAsUndone),
+      mergeMap((data) =>
+        of(this.doneService.markAsUndone(data)).pipe(
+          map(() => AllActions.markAsUndoneSuccess()),
+          catchError(() => of(AllActions.markAsUndoneFailure()))
+        )
+      )
     )
   );
 }

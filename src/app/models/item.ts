@@ -5,4 +5,17 @@ export interface Item {
   third: string;
   favorites: number;
   userIdentifier: string;
+  dones: {
+    first: boolean | null;
+    second: boolean | null;
+    third: boolean | null;
+  };
+}
+
+export interface ItemStore extends Item {
+  dones: {
+    first: boolean | null;
+    second: boolean | null;
+    third: boolean | null;
+  };
 }
