@@ -16,14 +16,20 @@ export const vote = createAction(
   props<{ identifier: string }>()
 );
 export const voteSuccess = createAction('[Items votes] Vote Sucess');
-export const voteFailure = createAction('[Items votes] Vote Failure');
+export const voteFailure = createAction(
+  '[Items votes] Vote Failure',
+  props<{ identifier: string }>()
+);
 
 export const unvote = createAction(
   '[Items votes] Unvote',
   props<{ identifier: string }>()
 );
 export const unvoteSuccess = createAction('[Items votes] Unvote Sucess');
-export const unvoteFailure = createAction('[Items votes] Unvote Failure');
+export const unvoteFailure = createAction(
+  '[Items votes] Unvote Failure',
+  props<{ identifier: string }>()
+);
 
 export const newItemFormChange = createAction(
   '[Items Form] Change',

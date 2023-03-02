@@ -55,20 +55,57 @@ export const itemReducer = createReducer(
     items: [],
     loading: false,
   })),
-  on(AllActions.vote, (state) => ({
+  on(AllActions.vote, (state, action) => ({
     ...state,
-    loading: true,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          favorites: 1 + Number(item.favorites)
+        };
+      } else {
+        return { ...item };
+      }
+    }),
   })),
-  on(AllActions.voteFailure, (state) => ({
+  on(AllActions.voteFailure, (state, action) => ({
     ...state,
-    loading: false,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          favorites: Number(item.favorites) - 1
+        };
+      } else {
+        return { ...item };
+      }
+    }),
   })),
-  on(AllActions.unvote, (state) => ({
+  on(AllActions.unvote, (state, action) => ({
     ...state,
-    loading: true,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          favorites: Number(item.favorites) - 1
+        };
+      } else {
+        return { ...item };
+      }
+    }),
   })),
-  on(AllActions.unvoteFailure, (state) => ({
+  on(AllActions.unvoteFailure, (state, action) => ({
     ...state,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          favorites: 1 + Number(item.favorites)
+        };
+      } else {
+        return { ...item };
+      }
+    }),
     loading: false,
   })),
   on(AllActions.newItemFormChange, (state, formValues) => ({
