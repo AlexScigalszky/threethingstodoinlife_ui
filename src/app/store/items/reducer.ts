@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { ThingsOrder } from 'src/app/enums/things_order.enum';
 import { Item, ItemStore } from 'src/app/models/item';
 import { NewItem } from 'src/app/models/new-item';
 import * as AllActions from '../actions';
@@ -40,14 +41,23 @@ export const itemReducer = createReducer(
   })),
   on(AllActions.loadUserDonesSuccess, (state, action) => ({
     ...state,
-    items: state.items.map((item) => ({
-      ...item,
-      dones: {
-        first: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneFirst ?? null,
-        second: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneSecond ?? null,
-        third: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneThird ?? null,
-      },
-    }) as ItemStore),
+    items: state.items.map(
+      (item) =>
+        ({
+          ...item,
+          dones: {
+            first:
+              action.dones.find((d) => d.tttIdentifier === item.identifier)
+                ?.doneFirst ?? null,
+            second:
+              action.dones.find((d) => d.tttIdentifier === item.identifier)
+                ?.doneSecond ?? null,
+            third:
+              action.dones.find((d) => d.tttIdentifier === item.identifier)
+                ?.doneThird ?? null,
+          },
+        } as ItemStore)
+    ),
     loading: false,
   })),
   on(AllActions.loadFailure, (state) => ({
@@ -61,7 +71,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: 1 + Number(item.favorites)
+          favorites: 1 + Number(item.favorites),
         };
       } else {
         return { ...item };
@@ -74,7 +84,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: Number(item.favorites) - 1
+          favorites: Number(item.favorites) - 1,
         };
       } else {
         return { ...item };
@@ -87,7 +97,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: Number(item.favorites) - 1
+          favorites: Number(item.favorites) - 1,
         };
       } else {
         return { ...item };
@@ -100,7 +110,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: 1 + Number(item.favorites)
+          favorites: 1 + Number(item.favorites),
         };
       } else {
         return { ...item };
@@ -129,5 +139,59 @@ export const itemReducer = createReducer(
   on(AllActions.newItemFailure, (state) => ({
     ...state,
     loading: false,
+  })),
+  on(AllActions.markAsDone, (state, action) => ({
+    ...state,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          dones: {
+            first: action.order === ThingsOrder.first ? true : item.dones.first,
+            second:
+              action.order === ThingsOrder.second ? true : item.dones.second,
+            third: action.order === ThingsOrder.third ? true : item.dones.third,
+          },
+        };
+      } else {
+        return { ...item };
+      }
+    }),
+  })),
+  on(AllActions.markAsTodo, (state, action) => ({
+    ...state,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          dones: {
+            first: action.order === ThingsOrder.first ? false : item.dones.first,
+            second:
+              action.order === ThingsOrder.second ? false : item.dones.second,
+            third: action.order === ThingsOrder.third ? false : item.dones.third,
+          },
+        };
+      } else {
+        return { ...item };
+      }
+    }),
+  })),
+  on(AllActions.clear, (state, action) => ({
+    ...state,
+    items: state.items.map((item) => {
+      if (item.identifier === action.identifier) {
+        return {
+          ...item,
+          dones: {
+            first: action.order === ThingsOrder.first ? null : item.dones.first,
+            second:
+              action.order === ThingsOrder.second ? null : item.dones.second,
+            third: action.order === ThingsOrder.third ? null : item.dones.third,
+          },
+        };
+      } else {
+        return { ...item };
+      }
+    }),
   }))
 );

@@ -96,7 +96,7 @@ export class ItemEffects {
     this.actions$.pipe(
       ofType(AllActions.markAsDone),
       mergeMap((data) =>
-        of(this.doneService.markAsDone(data)).pipe(
+        this.doneService.markAsDone(data).pipe(
           map(() => AllActions.markAsDoneSuccess()),
           catchError(() => of(AllActions.markAsDoneFailure()))
         )
@@ -104,13 +104,25 @@ export class ItemEffects {
     )
   );
 
-  markAsUndone$ = createEffect(() =>
+  markAsTodo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AllActions.markAsTodo),
       mergeMap((data) =>
-        of(this.doneService.markAsUndone(data)).pipe(
+        this.doneService.markAsTodo(data).pipe(
           map(() => AllActions.markAsTodoSuccess()),
           catchError(() => of(AllActions.markAsTodoFailure()))
+        )
+      )
+    )
+  );
+
+  clear$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AllActions.clear),
+      mergeMap((data) =>
+        this.doneService.clear(data).pipe(
+          map(() => AllActions.clearSuccess()),
+          catchError(() => of(AllActions.clearFailure()))
         )
       )
     )

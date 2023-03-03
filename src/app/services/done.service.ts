@@ -9,6 +9,8 @@ import { MarkAsDone } from '../types/mark_as_done.type';
 })
 export class DoneService {
   headers: any;
+  baseUrl =
+    'https://threethingstodoinlife-functions.netlify.app/.netlify/functions';
 
   constructor(private http: HttpClient) {
     this.headers = {
@@ -24,43 +26,46 @@ export class DoneService {
   getByUser(userIdentifier: string | null): Observable<DoneInfo[]> {
     return this.http
       .post<DoneInfo[]>(
-        'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/done-by-user',
+        this.baseUrl + '/done-by-user',
         { userIdentifier },
         {
           headers: this.headers,
         }
       )
       .pipe(
-        tap(console.log),
         map((items) =>
-          items.map((i: DoneInfo) => ({
-            ...i,
-            doneFirst: this.toNullableBoolean(i.doneFirst),
-            doneSecond: this.toNullableBoolean(i.doneSecond),
-            doneThird: this.toNullableBoolean(i.doneThird),
-          }))
+          items.map(
+            (i: DoneInfo) =>
+              ({
+                ...i,
+                doneFirst: this.toNullableBoolean(i.doneFirst),
+                doneSecond: this.toNullableBoolean(i.doneSecond),
+                doneThird: this.toNullableBoolean(i.doneThird),
+              } as DoneInfo)
+          )
         )
       );
   }
 
-  markAsUndone(data: MarkAsDone): Observable<void> {
-    // return this.http.post<void>(
-    //   'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-remove',
-    //   { identifier, userIdentifier },
-    //   {
-    //     headers: this.headers,
-    //   }
-    // );
-    return of();
+  markAsTodo(data: MarkAsDone): Observable<void> {
+    return this.http.post<void>(this.baseUrl + '/done-mark-as-todo', data, {
+      headers: this.headers,
+    });
   }
 
   markAsDone(data: MarkAsDone): Observable<void> {
-    return of();
+    return this.http.post<void>(this.baseUrl + '/done-mark-as-done', data, {
+      headers: this.headers,
+    });
   }
 
-  toNullableBoolean(value: string | boolean): boolean | null {
-    const result = value === '0' ? false : value === '1' ? true : null;
-    console.log({ value, result });
-    return result;
+  clear(data: MarkAsDone): Observable<void> {
+    return this.http.post<void>(this.baseUrl + '/done-clear', data, {
+      headers: this.headers,
+    });
+  }
+
+  private toNullableBoolean(value: string | boolean): boolean | null {
+    return value === '0' ? false : value === '1' ? true : null;
   }
 }
