@@ -26,6 +26,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/index/index.component';
+import { ItemActionsComponent } from './components/item-actions/item-actions.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { IndexComponent } from './pages/index/index.component';
     TodoFormComponent,
     LoginComponent,
     IndexComponent,
+    ItemActionsComponent,
   ],
   imports: [
     BrowserModule,

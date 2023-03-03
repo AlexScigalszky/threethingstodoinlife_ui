@@ -17,37 +17,40 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
       <ul>
         <hr />
         <li>
-          {{ item.first }} -  {{item.dones.first}}
-          <div *ngIf="isAuthenticated">
-            <button (click)="markAsDone(ThingsOrder.first)">
-              I already did 
-            </button>
-            <button (click)="markAsUndone(ThingsOrder.first)">
-              I have never did it
-            </button>
-          </div>
+          {{ item.first }}
+          <app-item-actions
+            *ngIf="isAuthenticated"
+            [item]="item"
+            [order]="ThingsOrder.first"
+            (onDone)="markAsDone(ThingsOrder.first)"
+            (onTodo)="markAsTodo(ThingsOrder.first)"
+            (onClear)="clear(ThingsOrder.first)"
+          >
+          </app-item-actions>
         </li>
         <li>
-          {{ item.second }} - {{item.dones.second}}
-          <div *ngIf="isAuthenticated">
-            <button (click)="markAsDone(ThingsOrder.second)">
-              I already did 
-            </button>
-            <button (click)="markAsUndone(ThingsOrder.second)">
-              I have never did it
-            </button>
-          </div>
+          {{ item.second }}
+          <app-item-actions
+            *ngIf="isAuthenticated"
+            [item]="item"
+            [order]="ThingsOrder.second"
+            (onDone)="markAsDone(ThingsOrder.second)"
+            (onTodo)="markAsTodo(ThingsOrder.second)"
+            (onClear)="clear(ThingsOrder.second)"
+          >
+          </app-item-actions>
         </li>
         <li>
-          {{ item.third }} - {{item.dones.third}}
-          <div *ngIf="isAuthenticated">
-            <button (click)="markAsDone(ThingsOrder.third)">
-              I already did 
-            </button>
-            <button (click)="markAsUndone(ThingsOrder.third)">
-              I have never did it
-            </button>
-          </div>
+          {{ item.third }}
+          <app-item-actions
+            *ngIf="isAuthenticated"
+            [item]="item"
+            [order]="ThingsOrder.third"
+            (onDone)="markAsDone(ThingsOrder.third)"
+            (onTodo)="markAsTodo(ThingsOrder.third)"
+            (onClear)="clear(ThingsOrder.third)"
+          >
+          </app-item-actions>
         </li>
       </ul>
     </div>
@@ -60,7 +63,8 @@ export class ItemComponent {
   @Output() onVote = new EventEmitter<string>();
   @Output() onUnvote = new EventEmitter<string>();
   @Output() onMarkAsDone = new EventEmitter<MarkAsDone>();
-  @Output() onMarkAsUndone = new EventEmitter<MarkAsDone>();
+  @Output() onMarkAsTodo = new EventEmitter<MarkAsDone>();
+  @Output() onClear = new EventEmitter<MarkAsDone>();
   ThingsOrder = ThingsOrder;
 
   vote(): void {
@@ -79,8 +83,16 @@ export class ItemComponent {
     });
   }
 
-  markAsUndone(order: ThingsOrder): void {
-    this.onMarkAsUndone.emit({
+  markAsTodo(order: ThingsOrder): void {
+    this.onMarkAsTodo.emit({
+      identifier: this.item!.identifier,
+      order,
+      userIdentifier: '',
+    });
+  }
+
+  clear(order: ThingsOrder): void {
+    this.onClear.emit({
       identifier: this.item!.identifier,
       order,
       userIdentifier: '',

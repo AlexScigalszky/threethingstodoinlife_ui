@@ -56,13 +56,24 @@ export const markAsDone = createAction(
 export const markAsDoneSuccess = createAction('[Done] Mark as Done Success');
 export const markAsDoneFailure = createAction('[Done] Mark as Done Failure');
 
-export const markAsUndone = createAction(
+export const markAsTodo = createAction(
   '[Done] Mark as Undone',
   props<MarkAsDone>()
 );
-export const markAsUndoneSuccess = createAction(
-  '[Done] Mark as Undone Success'
+export const markAsTodoSuccess = createAction(
+  '[Done] Mark as Todo Success'
 );
-export const markAsUndoneFailure = createAction(
-  '[Done] Mark as Undone Failure'
+export const markAsTodoFailure = createAction(
+  '[Done] Mark as Todo Failure'
+);
+
+export const clear = createAction(
+  '[Done] Clear',
+  props<MarkAsDone>()
+);
+export const clearSuccess = createAction(
+  '[Done] clear Success'
+);
+export const clearFailure = createAction(
+  '[Done] clear Failure'
 );

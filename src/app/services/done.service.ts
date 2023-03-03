@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { DoneInfo } from '../models/done_info';
 import { MarkAsDone } from '../types/mark_as_done.type';
 
@@ -22,13 +22,25 @@ export class DoneService {
   }
 
   getByUser(userIdentifier: string | null): Observable<DoneInfo[]> {
-    return this.http.post<DoneInfo[]>(
-      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/done-by-user',
-      { userIdentifier },
-      {
-        headers: this.headers,
-      }
-    );
+    return this.http
+      .post<DoneInfo[]>(
+        'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/done-by-user',
+        { userIdentifier },
+        {
+          headers: this.headers,
+        }
+      )
+      .pipe(
+        tap(console.log),
+        map((items) =>
+          items.map((i: DoneInfo) => ({
+            ...i,
+            doneFirst: this.toNullableBoolean(i.doneFirst),
+            doneSecond: this.toNullableBoolean(i.doneSecond),
+            doneThird: this.toNullableBoolean(i.doneThird),
+          }))
+        )
+      );
   }
 
   markAsUndone(data: MarkAsDone): Observable<void> {
@@ -41,7 +53,14 @@ export class DoneService {
     // );
     return of();
   }
+
   markAsDone(data: MarkAsDone): Observable<void> {
     return of();
+  }
+
+  toNullableBoolean(value: string | boolean): boolean | null {
+    const result = value === '0' ? false : value === '1' ? true : null;
+    console.log({ value, result });
+    return result;
   }
 }

@@ -29,7 +29,8 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
               (onVote)="vote($event)"
               (onUnvote)="unvote($event)"
               (onMarkAsDone)="markAsDone($event)"
-              (onMarkAsUndone)="markAsUndone($event)"
+              (onMarkAsTodo)="markAsTodo($event)"
+              (onClear)="clear($event)"
               [isAuthenticated]="data.isAuthenticated"
             ></app-item>
           </ng-template>
@@ -86,10 +87,21 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  markAsUndone(data: MarkAsDone): void {
+  markAsTodo(data: MarkAsDone): void {
     this.userIdentifier$.subscribe((userIdentifier) => {
       this.store.dispatch(
-        Actions.markAsUndone({
+        Actions.markAsTodo({
+          ...data,
+          userIdentifier: userIdentifier!,
+        })
+      );
+    });
+  }
+
+  clear(data: MarkAsDone): void {
+    this.userIdentifier$.subscribe((userIdentifier) => {
+      this.store.dispatch(
+        Actions.clear({
           ...data,
           userIdentifier: userIdentifier!,
         })

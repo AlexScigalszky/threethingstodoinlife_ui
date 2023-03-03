@@ -106,11 +106,11 @@ export class ItemEffects {
 
   markAsUndone$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AllActions.markAsUndone),
+      ofType(AllActions.markAsTodo),
       mergeMap((data) =>
         of(this.doneService.markAsUndone(data)).pipe(
-          map(() => AllActions.markAsUndoneSuccess()),
-          catchError(() => of(AllActions.markAsUndoneFailure()))
+          map(() => AllActions.markAsTodoSuccess()),
+          catchError(() => of(AllActions.markAsTodoFailure()))
         )
       )
     )

@@ -43,11 +43,11 @@ export const itemReducer = createReducer(
     items: state.items.map((item) => ({
       ...item,
       dones: {
-        first: action.dones.filter((d) => d.doneFirst == true).length > 0,
-        second: action.dones.filter((d) => d.doneSecond == true).length > 0,
-        third: action.dones.filter((d) => d.doneThird == true).length > 0,
+        first: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneFirst ?? null,
+        second: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneSecond ?? null,
+        third: action.dones.find((d) => d.tttIdentifier === item.identifier)?.doneThird ?? null,
       },
-    })),
+    }) as ItemStore),
     loading: false,
   })),
   on(AllActions.loadFailure, (state) => ({
