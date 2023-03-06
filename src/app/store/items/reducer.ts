@@ -35,6 +35,7 @@ export const itemReducer = createReducer(
         first: null,
         second: null,
         third: null,
+        loading: true,
       },
     })),
     loading: false,
@@ -55,6 +56,7 @@ export const itemReducer = createReducer(
             third:
               action.dones.find((d) => d.tttIdentifier === item.identifier)
                 ?.doneThird ?? null,
+            loading: false,
           },
         } as ItemStore)
     ),
@@ -151,6 +153,7 @@ export const itemReducer = createReducer(
             second:
               action.order === ThingsOrder.second ? true : item.dones.second,
             third: action.order === ThingsOrder.third ? true : item.dones.third,
+            loading: item.dones.loading,
           },
         };
       } else {
@@ -165,10 +168,13 @@ export const itemReducer = createReducer(
         return {
           ...item,
           dones: {
-            first: action.order === ThingsOrder.first ? false : item.dones.first,
+            first:
+              action.order === ThingsOrder.first ? false : item.dones.first,
             second:
               action.order === ThingsOrder.second ? false : item.dones.second,
-            third: action.order === ThingsOrder.third ? false : item.dones.third,
+            third:
+              action.order === ThingsOrder.third ? false : item.dones.third,
+            loading: item.dones.loading,
           },
         };
       } else {
@@ -187,6 +193,7 @@ export const itemReducer = createReducer(
             second:
               action.order === ThingsOrder.second ? null : item.dones.second,
             third: action.order === ThingsOrder.third ? null : item.dones.third,
+            loading: item.dones.loading,
           },
         };
       } else {

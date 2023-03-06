@@ -10,14 +10,13 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
 @Component({
   selector: 'app-index',
   template: `
+  
     <ng-container *ngIf="{ isAuthenticated: isAuthenticated$ | async } as data">
-      <div>
-        <app-todo-form
-          [values]="formValues$ | async"
-          (onChanged)="changed($event)"
-          (onSubmited)="addNewItem($event)"
-        ></app-todo-form>
-      </div>
+      <app-todo-form
+        [values]="formValues$ | async"
+        (onChanged)="changed($event)"
+        (onSubmited)="addNewItem($event)"
+      ></app-todo-form>
 
       <div *ngIf="loading$ | async">loading</div>
 

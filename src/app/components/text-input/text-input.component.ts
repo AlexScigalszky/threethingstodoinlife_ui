@@ -4,19 +4,21 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-text-input',
   template: `
-    <ng-container [formGroup]="formGroup" *ngIf="formGroup">
-      <label for="{{ controlName }}">Everybody have to do:</label>
+    <div [formGroup]="formGroup" *ngIf="formGroup" class="input-group mb-3">
+      <span class="input-group-text" id="{{ controlName + '_span' }}">
+      {{placeholder}}
+      </span>
       <input
         [attr.data-cy]="'text-input-' + controlName"
         id="{{ controlName }}"
         type="text"
         class="form-control"
         formControlName="{{ controlName }}"
-        placeholder="{{ placeholder }}"
         (change)="onValueChange()"
         [class.is-invalid]="f?.invalid && f?.dirty"
+        [attr.aria-describedby]="controlName + '_span'"
       />
-    </ng-container>
+    </div>
   `,
   styles: [],
 })
@@ -26,6 +28,7 @@ export class TextInputComponent {
     this.formGroup = value;
   }
   @Input() controlName: string = '';
+  @Input() position: number = 0;
   @Input() initialDisabled = false;
   @Input() placeholder = 'Type here';
   formGroup?: FormGroup;

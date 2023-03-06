@@ -6,14 +6,44 @@ import { Item } from 'src/app/models/item';
   selector: 'app-item-actions',
   template: `
     <div>
-      <label>Mark as</label>
-      <button *ngIf="item.dones[order] === false || item.dones[order] === null" (click)="markAsDone()">Done</button>
-      <button *ngIf="item.dones[order] === true || item.dones[order] === null" (click)="markAsTodo()">To do</button>
-      <button *ngIf="item.dones[order] !== null" (click)="clear()">clear</button>
+      <small>Mark as </small>
+      <button
+        *ngIf="item.dones[order] === false || item.dones[order] === null"
+        (click)="markAsDone()"
+        type="button"
+        class="btn btn-sm btn-outline-success mr-2"
+      >
+      <!-- <i class="icon bi-check2-circle"></i> -->
+      Done
+      </button>
+
+      <button
+        *ngIf="item.dones[order] === true || item.dones[order] === null"
+        (click)="markAsTodo()"
+        type="button"
+        class="btn btn-sm btn-outline-secondary mr-2"
+      >
+      <!-- <i class="icon bi-question-circle"></i> -->
+      To do
+      </button>
+      <button
+        *ngIf="item.dones[order] !== null"
+        (click)="clear()"
+        type="button"
+        class="btn btn-sm btn-link-danger"
+      >
+        <!-- <i class="icon bi-x"></i> -->
+        Clear
+      </button>
     </div>
+    <!-- <div>
+      <label>Mark as</label>
+      <button >Done</button>
+      <button ></button>
+      <button></button>
+    </div> -->
   `,
-  styles: [
-  ]
+  styles: [],
 })
 export class ItemActionsComponent {
   @Input() item!: Item;
@@ -26,11 +56,11 @@ export class ItemActionsComponent {
   markAsDone(): void {
     this.onDone.emit(true);
   }
-  
+
   markAsTodo(): void {
     this.onTodo.emit(true);
   }
-  
+
   clear(): void {
     this.onClear.emit(true);
   }

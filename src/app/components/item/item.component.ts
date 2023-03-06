@@ -6,53 +6,65 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
 @Component({
   selector: 'app-item',
   template: `
-    <div *ngIf="item">
-      <h3>
-        {{ item.favorites }} Votes
-        <div *ngIf="isAuthenticated">
-          <button (click)="vote()">Vote Up</button>
-          <button (click)="unvote()">Vote Down</button>
+    <div class="card" *ngIf="item">
+      <div class="card-header">
+        <h2 class="card-title">{{ item.favorites }} Points</h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            <div>
+              {{ item.first }}
+            </div>
+            <app-item-actions
+              *ngIf="isAuthenticated && !item.dones.loading"
+              [item]="item"
+              [order]="ThingsOrder.first"
+              (onDone)="markAsDone(ThingsOrder.first)"
+              (onTodo)="markAsTodo(ThingsOrder.first)"
+              (onClear)="clear(ThingsOrder.first)"
+            >
+            </app-item-actions>
+          </li>
+           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            <div>
+              {{ item.second }}
+            </div>
+            <app-item-actions
+              *ngIf="isAuthenticated && !item.dones.loading"
+              [item]="item"
+              [order]="ThingsOrder.second"
+              (onDone)="markAsDone(ThingsOrder.second)"
+              (onTodo)="markAsTodo(ThingsOrder.second)"
+              (onClear)="clear(ThingsOrder.second)"
+            >
+            </app-item-actions>
+          </li>
+           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            <div>
+              {{ item.third }}
+            </div>
+            <app-item-actions
+              *ngIf="isAuthenticated && !item.dones.loading"
+              [item]="item"
+              [order]="ThingsOrder.third"
+              (onDone)="markAsDone(ThingsOrder.third)"
+              (onTodo)="markAsTodo(ThingsOrder.third)"
+              (onClear)="clear(ThingsOrder.third)"
+            >
+            </app-item-actions>
+          </li>
+        </ul>
+        <div class="card-footer">
+          <button (click)="vote()" type="button" class="btn btn-success mr-2">
+            <i class="icons bi-arrow-up"></i> Vote Up
+            
+          </button>
+          <button (click)="unvote()" type="button" class="btn btn-danger">
+          <i class="icons bi-arrow-down"></i> Vote Down
+          </button>
         </div>
-      </h3>
-      <ul>
-        <hr />
-        <li>
-          {{ item.first }}
-          <app-item-actions
-            *ngIf="isAuthenticated"
-            [item]="item"
-            [order]="ThingsOrder.first"
-            (onDone)="markAsDone(ThingsOrder.first)"
-            (onTodo)="markAsTodo(ThingsOrder.first)"
-            (onClear)="clear(ThingsOrder.first)"
-          >
-          </app-item-actions>
-        </li>
-        <li>
-          {{ item.second }}
-          <app-item-actions
-            *ngIf="isAuthenticated"
-            [item]="item"
-            [order]="ThingsOrder.second"
-            (onDone)="markAsDone(ThingsOrder.second)"
-            (onTodo)="markAsTodo(ThingsOrder.second)"
-            (onClear)="clear(ThingsOrder.second)"
-          >
-          </app-item-actions>
-        </li>
-        <li>
-          {{ item.third }}
-          <app-item-actions
-            *ngIf="isAuthenticated"
-            [item]="item"
-            [order]="ThingsOrder.third"
-            (onDone)="markAsDone(ThingsOrder.third)"
-            (onTodo)="markAsTodo(ThingsOrder.third)"
-            (onClear)="clear(ThingsOrder.third)"
-          >
-          </app-item-actions>
-        </li>
-      </ul>
+      </div>
     </div>
   `,
   styles: [],

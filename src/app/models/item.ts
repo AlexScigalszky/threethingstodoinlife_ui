@@ -9,6 +9,7 @@ export interface Item {
     first: boolean | null;
     second: boolean | null;
     third: boolean | null;
+    loading: boolean;
   };
 }
 
@@ -17,5 +18,6 @@ export interface ItemStore extends Item {
     first: boolean | null;
     second: boolean | null;
     third: boolean | null;
+    loading: boolean;
   };
 }

@@ -66,6 +66,6 @@ export class DoneService {
   }
 
   private toNullableBoolean(value: string | boolean): boolean | null {
-    return value === '0' ? false : value === '1' ? true : null;
+    return value === '' ? null : value === true ? true : false;
   }
 }

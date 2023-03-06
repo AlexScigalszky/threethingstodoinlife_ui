@@ -62,6 +62,5 @@ export class LoginComponent implements OnInit {
   //   this.store.dispatch(Actions.refreshAuthToken());
   // }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

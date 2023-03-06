@@ -1,5 +1,22 @@
-<div *ngIf="userName$ | async as userName">
-  <p>{{ userName }}</p>
-  <button class="btn btn-danger" (click)="signOut()">Sign out</button>
+
+<div class="container">
+  
+  <nav
+    class="navbar navbar-light bg-light"
+    *ngIf="userName$ | async as userName"
+  >
+    <a class="navbar-brand">{{ userName }}</a>
+    <form class="form-inline">
+      <button
+        class="btn btn-outline-ligth my-2 my-sm-0"
+        (click)="signOut()"
+        type="button"
+      >
+        Sign out
+      </button>
+    </form>
+  </nav>
+  <div class="bg-transparent text-rigth"></div>
+  
+  <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>
