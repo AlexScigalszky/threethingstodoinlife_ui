@@ -11,6 +11,7 @@ export interface Item {
     third: boolean | null;
     loading: boolean;
   };
+  date: string;
 }
 
 export interface ItemStore extends Item {

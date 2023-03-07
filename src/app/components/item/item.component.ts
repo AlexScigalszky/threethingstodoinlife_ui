@@ -6,14 +6,37 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
 @Component({
   selector: 'app-item',
   template: `
-    <div class="card" *ngIf="item">
+    <div class="card mb-3" *ngIf="item">
       <div class="card-header">
-        <h2 class="card-title">{{ item.favorites }} Points</h2>
+        <h2
+          class="card-title d-flex justify-content-between align-items-center list-group-item-action"
+        >
+          <div>{{ item.favorites }} Points</div>
+          <div>
+            <button
+              (click)="vote()"
+              type="button"
+              class="btn  vote-up"
+            >
+              <i class="icons bi-arrow-up"></i> Vote Up
+            </button>
+            <button
+              (click)="unvote()"
+              type="button"
+              class="btn vote-down mf-3"
+            >
+              <i class="icons bi-arrow-down"></i> Vote Down
+            </button>
+          </div>
+        </h2>
       </div>
       <div class="card-body">
         <ul class="list-group">
-           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
+          >
             <div>
+              <i class="icons bi-1-circle-fill gold"></i>
               {{ item.first }}
             </div>
             <app-item-actions
@@ -26,8 +49,11 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             >
             </app-item-actions>
           </li>
-           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
+          >
             <div>
+              <i class="icons bi-2-circle-fill platinium"></i>
               {{ item.second }}
             </div>
             <app-item-actions
@@ -40,8 +66,11 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             >
             </app-item-actions>
           </li>
-           <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
+          >
             <div>
+              <i class="icons bi-3-circle-fill bronce"></i>
               {{ item.third }}
             </div>
             <app-item-actions
@@ -55,19 +84,12 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             </app-item-actions>
           </li>
         </ul>
-        <div class="card-footer">
-          <button (click)="vote()" type="button" class="btn btn-success mr-2">
-            <i class="icons bi-arrow-up"></i> Vote Up
-            
-          </button>
-          <button (click)="unvote()" type="button" class="btn btn-danger">
-          <i class="icons bi-arrow-down"></i> Vote Down
-          </button>
-        </div>
+        <!-- <div class="card-footer">
+          <small> {{ item.date }}</small>
+        </div> -->
       </div>
     </div>
   `,
-  styles: [],
 })
 export class ItemComponent {
   @Input() item?: Item;

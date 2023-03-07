@@ -13,8 +13,7 @@ import { Item } from 'src/app/models/item';
         type="button"
         class="btn btn-sm btn-outline-success mr-2"
       >
-      <!-- <i class="icon bi-check2-circle"></i> -->
-      Done
+        Done
       </button>
 
       <button
@@ -23,8 +22,7 @@ import { Item } from 'src/app/models/item';
         type="button"
         class="btn btn-sm btn-outline-secondary mr-2"
       >
-      <!-- <i class="icon bi-question-circle"></i> -->
-      To do
+        To do
       </button>
       <button
         *ngIf="item.dones[order] !== null"
@@ -32,7 +30,6 @@ import { Item } from 'src/app/models/item';
         type="button"
         class="btn btn-sm btn-link-danger"
       >
-        <!-- <i class="icon bi-x"></i> -->
         Clear
       </button>
     </div>
