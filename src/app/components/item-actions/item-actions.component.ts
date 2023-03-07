@@ -6,9 +6,8 @@ import { Item } from 'src/app/models/item';
   selector: 'app-item-actions',
   template: `
     <div>
-      <small>Mark as </small>
       <button
-        *ngIf="item.dones[order] === false || item.dones[order] === null"
+        [class.disabled]="!(item.dones[order] === false || item.dones[order] === null)"
         (click)="markAsDone()"
         type="button"
         class="btn btn-sm btn-outline-success mr-2"
@@ -17,7 +16,7 @@ import { Item } from 'src/app/models/item';
       </button>
 
       <button
-        *ngIf="item.dones[order] === true || item.dones[order] === null"
+        [class.disabled]="!(item.dones[order] === true || item.dones[order] === null)"
         (click)="markAsTodo()"
         type="button"
         class="btn btn-sm btn-outline-secondary mr-2"
@@ -25,12 +24,12 @@ import { Item } from 'src/app/models/item';
         To do
       </button>
       <button
-        *ngIf="item.dones[order] !== null"
+        [class.disabled]="!(item.dones[order] !== null)"
         (click)="clear()"
         type="button"
         class="btn btn-sm btn-link-danger"
       >
-        Clear
+        Reset
       </button>
     </div>
   `,

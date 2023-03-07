@@ -22,14 +22,14 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
           </div>
         </h2>
       </div>
-      <div class="card-body">
+      <div class="card-body p-0">
         <ul class="list-group">
           <li class="list-group-item">
             <div
               class="d-flex justify-content-between align-items-center list-group-item-action"
             >
               <div>
-                <i class="icons bi-1-circle-fill gold"></i>
+                <!-- <i class="icons bi-1-circle-fill gold"></i> -->
                 {{ item.first }}
               </div>
               <app-item-actions
@@ -47,7 +47,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
           >
             <div>
-              <i class="icons bi-2-circle-fill platinium"></i>
+              <!-- <i class="icons bi-2-circle-fill platinium"></i> -->
               {{ item.second }}
             </div>
             <app-item-actions
@@ -64,7 +64,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
           >
             <div>
-              <i class="icons bi-3-circle-fill bronce"></i>
+              <!-- <i class="icons bi-3-circle-fill bronce"></i> -->
               {{ item.third }}
             </div>
             <app-item-actions
