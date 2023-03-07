@@ -36,12 +36,6 @@ import { Item } from 'src/app/models/item';
         Clear
       </button>
     </div>
-    <!-- <div>
-      <label>Mark as</label>
-      <button >Done</button>
-      <button ></button>
-      <button></button>
-    </div> -->
   `,
   styles: [],
 })
