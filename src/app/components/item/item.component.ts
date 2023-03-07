@@ -13,18 +13,10 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
         >
           <div>{{ item.favorites }} Points</div>
           <div>
-            <button
-              (click)="vote()"
-              type="button"
-              class="btn  vote-up"
-            >
+            <button (click)="vote()" type="button" class="btn  vote-up">
               <i class="icons bi-arrow-up"></i> Vote Up
             </button>
-            <button
-              (click)="unvote()"
-              type="button"
-              class="btn vote-down mf-3"
-            >
+            <button (click)="unvote()" type="button" class="btn vote-down mf-3">
               <i class="icons bi-arrow-down"></i> Vote Down
             </button>
           </div>
@@ -32,22 +24,24 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
       </div>
       <div class="card-body">
         <ul class="list-group">
-          <li
-            class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
-          >
-            <div>
-              <i class="icons bi-1-circle-fill gold"></i>
-              {{ item.first }}
-            </div>
-            <app-item-actions
-              *ngIf="isAuthenticated && !item.dones.loading"
-              [item]="item"
-              [order]="ThingsOrder.first"
-              (onDone)="markAsDone(ThingsOrder.first)"
-              (onTodo)="markAsTodo(ThingsOrder.first)"
-              (onClear)="clear(ThingsOrder.first)"
+          <li class="list-group-item">
+            <div
+              class="d-flex justify-content-between align-items-center list-group-item-action"
             >
-            </app-item-actions>
+              <div>
+                <i class="icons bi-1-circle-fill gold"></i>
+                {{ item.first }}
+              </div>
+              <app-item-actions
+                *ngIf="isAuthenticated && !item.dones.loading"
+                [item]="item"
+                [order]="ThingsOrder.first"
+                (onDone)="markAsDone(ThingsOrder.first)"
+                (onTodo)="markAsTodo(ThingsOrder.first)"
+                (onClear)="clear(ThingsOrder.first)"
+              >
+              </app-item-actions>
+            </div>
           </li>
           <li
             class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
