@@ -4,7 +4,7 @@ import { Item } from 'src/app/models/item';
 @Component({
   selector: 'app-item-list',
   template: `
-    <h1>Count:{{ items.length }}</h1>
+    <h1>What people say</h1>
     <div *ngFor="let item of items">
       <ng-template
         *ngIf="itemTemplate"
