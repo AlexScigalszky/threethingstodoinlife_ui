@@ -3,7 +3,7 @@ export interface Item {
   first: string;
   second: string;
   third: string;
-  favorites: number;
+  votes: number;
   userIdentifier: string;
   dones: {
     first: boolean | null;

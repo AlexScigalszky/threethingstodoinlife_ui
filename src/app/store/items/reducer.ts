@@ -73,7 +73,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: 1 + Number(item.favorites),
+          votes: 1 + Number(item.votes),
         };
       } else {
         return { ...item };
@@ -86,7 +86,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: Number(item.favorites) - 1,
+          votes: Number(item.votes) - 1,
         };
       } else {
         return { ...item };
@@ -99,7 +99,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: Number(item.favorites) - 1,
+          votes: Number(item.votes) - 1,
         };
       } else {
         return { ...item };
@@ -112,7 +112,7 @@ export const itemReducer = createReducer(
       if (item.identifier === action.identifier) {
         return {
           ...item,
-          favorites: 1 + Number(item.favorites),
+          votes: 1 + Number(item.votes),
         };
       } else {
         return { ...item };

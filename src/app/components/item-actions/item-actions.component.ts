@@ -5,7 +5,7 @@ import { Item } from 'src/app/models/item';
 @Component({
   selector: 'app-item-actions',
   template: `
-    <div>
+    <div class="actions">
       <button
         [class.disabled]="done"
         (click)="markAsDone()"
@@ -39,7 +39,7 @@ import { Item } from 'src/app/models/item';
       </button>
     </div>
   `,
-  styles: [],
+  styles: ['.actions { min-width: 160px; }'],
 })
 export class ItemActionsComponent {
   @Input() item!: Item;

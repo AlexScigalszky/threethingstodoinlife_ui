@@ -11,7 +11,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
         <h2
           class="card-title d-flex justify-content-between align-items-center list-group-item-action"
         >
-          <div>{{ item.favorites }} Points</div>
+          <div>{{ item.votes }} Points</div>
           <div>
             <button (click)="vote()" type="button" class="btn  vote-up">
               <i class="icons bi-arrow-up"></i> Vote Up
