@@ -30,7 +30,7 @@ export class NoAuthGuard implements CanActivate {
       take(1),
       mergeMap((fund) => {
         if (fund) {
-          
+          console.log('fund', fund)
         } else {
           console.log('no auth guard')
           this.router.navigate(['/login']);

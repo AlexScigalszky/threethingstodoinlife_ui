@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import * as Selectors from './store/selectors';
 import * as Actions from './store/actions';
 import { Router } from '@angular/router';
-import { distinctUntilChanged, filter, skip } from 'rxjs';
+import { distinctUntilChanged, filter, skip, tap } from 'rxjs';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,11 @@ import { distinctUntilChanged, filter, skip } from 'rxjs';
 export class AppComponent implements OnInit {
   userName$ = this.store.select(Selectors.selectUsername);
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private _authService: SocialAuthService
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(Actions.subscribeLogin());
@@ -25,6 +30,9 @@ export class AppComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(() => this.router.navigate(['/']));
+      this._authService.authState.subscribe((user) => {
+        console.log('logged?', user);
+      });
   }
 
   signOut(): void {

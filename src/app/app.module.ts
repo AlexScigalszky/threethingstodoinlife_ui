@@ -55,12 +55,14 @@ import { ItemActionsComponent } from './components/item-actions/item-actions.com
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: false,
+        autoLogin: true,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '348929802688-q7gmf4smph8ttvd83bmkhm8geuab3at1.apps.googleusercontent.com'
+              '348929802688-q7gmf4smph8ttvd83bmkhm8geuab3at1.apps.googleusercontent.com',{
+                oneTapEnabled: true
+              }
             ),
           },
           // {

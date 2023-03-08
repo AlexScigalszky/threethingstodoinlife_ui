@@ -14,11 +14,14 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(AuthActions.login, (state, action) => ({
-    ...state,
-    logged: true,
-    user: { ...action },
-  })),
+  on(AuthActions.login, (state, action) => {
+    console.log(action);
+    return {
+      ...state,
+      logged: true,
+      user: { ...action },
+    }
+  }),
   on(AuthActions.logoutSuccess, (state) => ({
     ...state,
     logged: false,

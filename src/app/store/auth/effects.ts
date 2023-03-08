@@ -1,4 +1,7 @@
-import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+} from '@abacritt/angularx-social-login';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -25,8 +28,8 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.logout),
       mergeMap(() =>
-      of(this._authService.signOut()).pipe(
-          map(() => { 
+        of(this._authService.signOut()).pipe(
+          map(() => {
             this.router.navigate(['/login']);
             return AuthActions.logoutSuccess();
           }),
@@ -39,10 +42,15 @@ export class AuthEffects {
   subscribeLogin$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.subscribeLogin),
-      tap(console.log),
       mergeMap(() =>
         this._authService.authState.pipe(
-          map((user) => AuthActions.login(user)),
+          map((user) => {
+            if (user) {
+              return AuthActions.login(user);
+            } else {
+              return AuthActions.subscribeLoginFailure();
+            }
+          }),
           catchError(() => of(AuthActions.subscribeLoginFailure()))
         )
       )
