@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { distinctUntilChanged, filter, startWith, take } from 'rxjs';
+import { distinctUntilChanged, filter, map, startWith, take } from 'rxjs';
 
 import * as Actions from '../../store/actions';
 import * as Selectors from '../../store/selectors';
@@ -10,7 +10,6 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
 @Component({
   selector: 'app-index',
   template: `
-  
     <ng-container *ngIf="{ isAuthenticated: isAuthenticated$ | async } as data">
       <app-todo-form
         [values]="formValues$ | async"
@@ -40,7 +39,10 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
   styles: [],
 })
 export class IndexComponent implements OnInit {
-  items$ = this.store.select(Selectors.selectItemList);
+  items$ = this.store.select(Selectors.selectItemList).pipe(
+    map((items) => [...items]),
+    map((items) => items.sort((a, b) => b.votes - a.votes))
+  );
   loading$ = this.store.select(Selectors.selectIsLoading);
   formValues$ = this.store
     .select(Selectors.selectFormValues)
