@@ -29,7 +29,7 @@ export class ItemsService {
 
   vote(identifier: string, userIdentifier: string): Observable<void> {
     return this.http.post<void>(
-      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-add',
+      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/vote-up',
       { identifier, userIdentifier },
       {
         headers: this.headers,
@@ -39,7 +39,7 @@ export class ItemsService {
 
   unvote(identifier: string, userIdentifier: string): Observable<void> {
     return this.http.post<void>(
-      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/favorites-remove',
+      'https://threethingstodoinlife-functions.netlify.app/.netlify/functions/vote-down',
       { identifier, userIdentifier },
       {
         headers: this.headers,

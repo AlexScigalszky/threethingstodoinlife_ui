@@ -7,27 +7,33 @@ import { Item } from 'src/app/models/item';
   template: `
     <div>
       <button
-        [class.disabled]="!(item.dones[order] === false || item.dones[order] === null)"
+        [class.disabled]="done"
         (click)="markAsDone()"
         type="button"
-        class="btn btn-sm btn-outline-success mr-2"
+        class="btn btn-sm  mr-2"
+        [class.btn-success]="done"
+        [class.btn-outline-success]="!done"
       >
         Done
       </button>
 
       <button
-        [class.disabled]="!(item.dones[order] === true || item.dones[order] === null)"
+        [class.disabled]="todo"
         (click)="markAsTodo()"
         type="button"
         class="btn btn-sm btn-outline-secondary mr-2"
+        [class.btn-success]="todo"
+        [class.btn-outline-secondary]="!todo"
       >
         To do
       </button>
       <button
-        [class.disabled]="!(item.dones[order] !== null)"
+        [class.disabled]="reset"
         (click)="clear()"
         type="button"
         class="btn btn-sm btn-link-danger"
+        [class.btn-success]="reset"
+        [class.btn-outline-secondary]="!reset"
       >
         Reset
       </button>
@@ -43,6 +49,17 @@ export class ItemActionsComponent {
   @Output() onTodo = new EventEmitter<boolean>();
   @Output() onClear = new EventEmitter<boolean>();
 
+  get done() {
+    return !(this.item.dones[this.order] === false || this.item.dones[this.order] === null);
+  }
+
+  get todo() {
+    return !(this.item.dones[this.order] === true || this.item.dones[this.order] === null);
+  }
+
+  get reset() {
+    return !(this.item.dones[this.order] !== null)
+  }
   markAsDone(): void {
     this.onDone.emit(true);
   }
