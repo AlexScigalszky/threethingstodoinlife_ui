@@ -8,10 +8,10 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
   template: `
     <div class="card mb-3" *ngIf="item">
       <div class="card-header">
-        <h2
+        <h4
           class="card-title d-flex justify-content-between align-items-center list-group-item-action"
         >
-          <div>{{ item.votes }} Points</div>
+          <div>{{ item.votes }} Votes</div>
           <div>
             <button (click)="vote()" type="button" class="btn  vote-up">
               <i class="icons bi-arrow-up"></i> Vote Up
@@ -20,7 +20,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
               <i class="icons bi-arrow-down"></i> Vote Down
             </button>
           </div>
-        </h2>
+        </h4>
       </div>
       <div class="card-body p-0">
         <ul class="list-group">

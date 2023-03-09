@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
   selector: 'app-text-input',
   template: `
     <div [formGroup]="formGroup" *ngIf="formGroup" class="input-group mb-3">
-      <span class="input-group-text" id="{{ controlName + '_span' }}">
+      <span class="input-group-text bg-success text-light" id="{{ controlName + '_span' }}">
       {{placeholder}}
       </span>
       <input

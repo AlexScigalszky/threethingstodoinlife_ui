@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   template: `
-    <div id="login-container" class=" d-flex justify-content-center">
+    <div id="login-container" class="d-flex justify-content-center">
       <div class="jumbotron bg-transparent text-center d-flex">
         <div *ngIf="!user" class="card text-center align-self-center">
           <h6 class="card-header">Three thing to do in life Login</h6>

@@ -27,6 +27,7 @@ import {
 import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/index/index.component';
 import { ItemActionsComponent } from './components/item-actions/item-actions.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ItemActionsComponent } from './components/item-actions/item-actions.com
     LoginComponent,
     IndexComponent,
     ItemActionsComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

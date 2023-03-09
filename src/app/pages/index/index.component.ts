@@ -11,61 +11,44 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
   selector: 'app-index',
   template: `
     <ng-container *ngIf="{ isAuthenticated: isAuthenticated$ | async } as data">
-      <app-todo-form
-        [values]="formValues$ | async"
-        (onChanged)="changed($event)"
-        (onSubmited)="addNewItem($event)"
-      ></app-todo-form>
+      <h1 class="display-1 text-center p-5">
+        The three thing everybody have to do in life
+      </h1>
 
-      <h1 class="text-center">What people say</h1>
-
-      <div class="row" *ngIf="loading$ | async">
-        <div class="col-md-12 text-center">
-          <div class="spinner-grow text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-secondary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-danger" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-warning" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-info" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="spinner-grow text-dark" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
+      <div class="region d-flex justify-content-center p-2">
+        <app-todo-form
+          [values]="formValues$ | async"
+          (onChanged)="changed($event)"
+          (onSubmited)="addNewItem($event)"
+        ></app-todo-form>
       </div>
 
-      <ng-container *ngIf="items$ | async as items">
-        <app-item-list [items]="items">
-          <ng-template let-item>
-            <app-item
-              [item]="item"
-              (onVote)="vote($event)"
-              (onUnvote)="unvote($event)"
-              (onMarkAsDone)="markAsDone($event)"
-              (onMarkAsTodo)="markAsTodo($event)"
-              (onClear)="clear($event)"
-              [isAuthenticated]="data.isAuthenticated"
-            ></app-item>
-          </ng-template>
-        </app-item-list>
-      </ng-container>
+      <div class="region d-flex justify-content-center">
+        <div>
+          <h1 class="text-center">What people say</h1>
+
+          <app-spinner class="row" *ngIf="loading$ | async"></app-spinner>
+
+          <ng-container *ngIf="items$ | async as items">
+            <app-item-list [items]="items">
+              <ng-template let-item>
+                <app-item
+                  [item]="item"
+                  (onVote)="vote($event)"
+                  (onUnvote)="unvote($event)"
+                  (onMarkAsDone)="markAsDone($event)"
+                  (onMarkAsTodo)="markAsTodo($event)"
+                  (onClear)="clear($event)"
+                  [isAuthenticated]="data.isAuthenticated"
+                ></app-item>
+              </ng-template>
+            </app-item-list>
+          </ng-container>
+        </div>
+      </div>
     </ng-container>
   `,
-  styles: [],
+  styles: ['.main-title { font-size:7rem; }', '.region { min-height: 45vh; }'],
 })
 export class IndexComponent implements OnInit {
   items$ = this.store.select(Selectors.selectItemList).pipe(

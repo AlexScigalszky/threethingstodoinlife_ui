@@ -6,29 +6,28 @@ import { NewItem } from 'src/app/models/new-item';
 @Component({
   selector: 'app-todo-form',
   template: `
-    <h1>The three thing everybody have to do in life</h1>
-    <p>In your opinion, what are the three this everybody have to do it in life</p>
+    <h3 class="text-secondary">In your opinion, what are the three this everybody <strong>have</strong> to do it in <strong>life</strong></h3>
     <form [formGroup]="form">
       <app-text-input
         [controlName]="'first'"
         [form]="form"
         class="form-group"
         [position]="1"
-        [placeholder]="'1st'"
+        [placeholder]="'1°'"
       ></app-text-input>
       <app-text-input
         [controlName]="'second'"
         [form]="form"
         class="form-group"
         [position]="2"
-        [placeholder]="'2nd'"
+        [placeholder]="'2°'"
       ></app-text-input>
       <app-text-input
         [controlName]="'third'"
         [form]="form"
         class="form-group"
         [position]="3"
-        [placeholder]="'3rd'"
+        [placeholder]="'3°'"
       ></app-text-input>
     </form>
     <button
