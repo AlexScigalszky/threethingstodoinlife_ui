@@ -17,7 +17,36 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
         (onSubmited)="addNewItem($event)"
       ></app-todo-form>
 
-      <div *ngIf="loading$ | async">loading</div>
+      <h1 class="text-center">What people say</h1>
+
+      <div class="row" *ngIf="loading$ | async">
+        <div class="col-md-12 text-center">
+          <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-secondary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-dark" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
 
       <ng-container *ngIf="items$ | async as items">
         <app-item-list [items]="items">

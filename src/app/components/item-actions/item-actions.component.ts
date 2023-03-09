@@ -7,39 +7,40 @@ import { Item } from 'src/app/models/item';
   template: `
     <div class="actions">
       <button
-        [class.disabled]="done"
         (click)="markAsDone()"
         type="button"
-        class="btn btn-sm  mr-2"
-        [class.btn-success]="done"
+        class="btn btn-sm mr-2 btn-done"
         [class.btn-outline-success]="!done"
+        [class.btn-success]="done"
       >
         Done
       </button>
 
       <button
-        [class.disabled]="todo"
         (click)="markAsTodo()"
         type="button"
-        class="btn btn-sm btn-outline-secondary mr-2"
-        [class.btn-success]="todo"
-        [class.btn-outline-secondary]="!todo"
+        class="btn btn-sm mr-2 btn-todo"
+        [class.btn-outline-primary]="!todo"
+        [class.btn-primary]="todo"
       >
         To do
       </button>
+<!-- 
       <button
-        [class.disabled]="reset"
         (click)="clear()"
         type="button"
         class="btn btn-sm btn-link-danger"
-        [class.btn-success]="reset"
-        [class.btn-outline-secondary]="!reset"
       >
         Reset
-      </button>
+      </button> -->
     </div>
   `,
-  styles: ['.actions { min-width: 160px; }'],
+  styles: [
+    '.actions { min-width: 125px; }',
+    'button { margin-left: 10px; margin-rigth: 10px }',
+    '.btn-done { color: "#fefefe"; }',
+    '.btn-todo { color: "#fefefe"; }',
+  ],
 })
 export class ItemActionsComponent {
   @Input() item!: Item;
@@ -50,16 +51,17 @@ export class ItemActionsComponent {
   @Output() onClear = new EventEmitter<boolean>();
 
   get done() {
-    return !(this.item.dones[this.order] === false || this.item.dones[this.order] === null);
+    return this.item.dones[this.order] === true;
   }
 
   get todo() {
-    return !(this.item.dones[this.order] === true || this.item.dones[this.order] === null);
+    return this.item.dones[this.order] === false;
   }
 
-  get reset() {
-    return !(this.item.dones[this.order] !== null)
-  }
+  // get reset() {
+  //   return !(this.item.dones[this.order] !== null);
+  // }
+
   markAsDone(): void {
     this.onDone.emit(true);
   }

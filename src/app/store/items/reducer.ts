@@ -42,24 +42,20 @@ export const itemReducer = createReducer(
   })),
   on(AllActions.loadUserDonesSuccess, (state, action) => ({
     ...state,
-    items: state.items.map(
-      (item) =>
-        ({
-          ...item,
-          dones: {
-            first:
-              action.dones.find((d) => d.tttIdentifier === item.identifier)
-                ?.doneFirst ?? null,
-            second:
-              action.dones.find((d) => d.tttIdentifier === item.identifier)
-                ?.doneSecond ?? null,
-            third:
-              action.dones.find((d) => d.tttIdentifier === item.identifier)
-                ?.doneThird ?? null,
-            loading: false,
-          },
-        } as ItemStore)
-    ),
+    items: state.items.map((item) => {
+      const done = action.dones.find(
+        (d) => d.tttIdentifier === item.identifier
+      );
+      return {
+        ...item,
+        dones: {
+          first: done?.doneFirst ?? null,
+          second: done?.doneSecond ?? null,
+          third: done?.doneThird ?? null,
+          loading: false,
+        },
+      } as ItemStore;
+    }),
     loading: false,
   })),
   on(AllActions.loadFailure, (state) => ({
@@ -149,10 +145,24 @@ export const itemReducer = createReducer(
         return {
           ...item,
           dones: {
-            first: action.order === ThingsOrder.first ? true : item.dones.first,
+            first:
+              action.order === ThingsOrder.first
+                ? item.dones.first === true
+                  ? null
+                  : true
+                : item.dones.first,
             second:
-              action.order === ThingsOrder.second ? true : item.dones.second,
-            third: action.order === ThingsOrder.third ? true : item.dones.third,
+              action.order === ThingsOrder.second
+                ? item.dones.second === true
+                  ? null
+                  : true
+                : item.dones.second,
+            third:
+              action.order === ThingsOrder.third
+                ? item.dones.third === true
+                  ? null
+                  : true
+                : item.dones.third,
             loading: item.dones.loading,
           },
         };
@@ -169,11 +179,23 @@ export const itemReducer = createReducer(
           ...item,
           dones: {
             first:
-              action.order === ThingsOrder.first ? false : item.dones.first,
+              action.order === ThingsOrder.first
+                ? item.dones.first === false
+                  ? null
+                  : false
+                : item.dones.first,
             second:
-              action.order === ThingsOrder.second ? false : item.dones.second,
+              action.order === ThingsOrder.second
+                ? item.dones.second === false
+                  ? null
+                  : false
+                : item.dones.second,
             third:
-              action.order === ThingsOrder.third ? false : item.dones.third,
+              action.order === ThingsOrder.third
+                ? item.dones.third === false
+                  ? null
+                  : false
+                : item.dones.third,
             loading: item.dones.loading,
           },
         };
