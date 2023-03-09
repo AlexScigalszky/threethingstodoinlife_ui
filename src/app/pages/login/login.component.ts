@@ -9,13 +9,19 @@ import { Router } from '@angular/router';
     <div id="login-container" class="d-flex justify-content-center">
       <div class="jumbotron bg-transparent text-center d-flex">
         <div *ngIf="!user" class="card text-center align-self-center">
-          <h6 class="card-header">Three thing to do in life Login</h6>
-          <div class="card-block">
+          <h1 class="card-header display-1 text-center p-5">
+            The three thing everybody have to do in life
+          </h1>
+          <div class="card-block p-3">
             <h4 class="card-title">Not signed in</h4>
             <p class="card-text">Sign in with</p>
           </div>
-          <div class="card-block d-flex justify-content-center">
-            <asl-google-signin-button class="mx-5"></asl-google-signin-button>
+          <div class="card-block d-flex justify-content-center p-3">
+            <asl-google-signin-button
+              [size]="'large'"
+              [text]="'signin_with'"
+              [type]="'standard'"
+            ></asl-google-signin-button>
           </div>
         </div>
 
@@ -46,9 +52,7 @@ import { Router } from '@angular/router';
       </div>
     </div>
   `,
-  styles: [
-    '#login-container { height: 100vh }',
-  ],
+  styles: ['#login-container { height: 100vh }'],
 })
 export class LoginComponent implements OnInit {
   user: SocialUser | undefined;
