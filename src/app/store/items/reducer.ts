@@ -8,11 +8,13 @@ export type ItemsState = {
   items: ItemStore[];
   loading: boolean;
   threeThingsForm: NewItem;
+  resetThreeThingsForm: boolean;
 };
 
 export const initialState: ItemsState = {
   items: [],
   loading: false,
+  resetThreeThingsForm: false,
   threeThingsForm: {
     first: '',
     second: '',
@@ -122,11 +124,11 @@ export const itemReducer = createReducer(
   })),
   on(AllActions.newItem, (state) => ({
     ...state,
-    loading: false,
+    resetThreeThingsForm: false,
   })),
   on(AllActions.newItemSuccess, (state) => ({
     ...state,
-    loading: true,
+    resetThreeThingsForm: true,
     threeThingsForm: {
       first: '',
       second: '',
@@ -136,7 +138,7 @@ export const itemReducer = createReducer(
   })),
   on(AllActions.newItemFailure, (state) => ({
     ...state,
-    loading: false,
+    resetThreeThingsForm: true,
   })),
   on(AllActions.markAsDone, (state, action) => ({
     ...state,

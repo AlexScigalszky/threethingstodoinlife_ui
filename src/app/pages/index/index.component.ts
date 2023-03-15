@@ -18,6 +18,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
       <div class="region d-flex justify-content-center p-2">
         <app-todo-form
           [values]="formValues$ | async"
+          [reset]="reset$ | async"
           (onChanged)="changed($event)"
           (onSubmited)="addNewItem($event)"
         ></app-todo-form>
@@ -65,6 +66,9 @@ export class IndexComponent implements OnInit {
   userIdentifier$ = this.store.select(Selectors.selectUserIdentifier).pipe(
     filter((userIdentifier) => userIdentifier !== null),
     take(1)
+  );
+  reset$ = this.store.select(Selectors.selectResetThreeThingsForm).pipe(
+    startWith(false)
   );
 
   constructor(private store: Store) {}

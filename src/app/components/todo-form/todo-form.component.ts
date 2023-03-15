@@ -50,6 +50,11 @@ export class TodoFormComponent {
       this.form.reset({ emitEvent: false });
     }
   }
+  @Input() set reset(value: boolean | null) {
+    if (value) {
+      this.form.reset({ emitEvent: false });
+    }
+  }
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {

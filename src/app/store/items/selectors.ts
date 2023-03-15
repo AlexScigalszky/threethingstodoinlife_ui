@@ -17,3 +17,8 @@ export const selectFormValues = createSelector(
   getUserFeatureState,
   (state: ItemsState) => state.threeThingsForm
 );
+
+export const selectResetThreeThingsForm = createSelector(
+  getUserFeatureState,
+  (state: ItemsState) => state.resetThreeThingsForm
+);
