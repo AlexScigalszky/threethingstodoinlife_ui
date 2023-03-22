@@ -22,3 +22,14 @@ export const selectResetThreeThingsForm = createSelector(
   getUserFeatureState,
   (state: ItemsState) => state.resetThreeThingsForm
 );
+
+export const selectItemInTodoList = createSelector(
+  getUserFeatureState,
+  (state: ItemsState) =>
+    state.items.filter(
+      (item) =>
+        item.dones.first === false ||
+        item.dones.second === false ||
+        item.dones.third === false
+    )
+);

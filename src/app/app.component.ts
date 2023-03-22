@@ -16,8 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private router: Router,
-    private _authService: SocialAuthService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,9 +29,6 @@ export class AppComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(() => this.router.navigate(['/']));
-      this._authService.authState.subscribe((user) => {
-        console.log('logged?', user);
-      });
   }
 
   signOut(): void {

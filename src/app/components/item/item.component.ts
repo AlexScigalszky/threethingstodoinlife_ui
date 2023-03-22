@@ -29,8 +29,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
               class="d-flex justify-content-between align-items-center list-group-item-action"
             >
               <div>
-                <!-- <i class="icons bi-1-circle-fill gold"></i> -->
-                {{ item.first }}
+                {{ item.first | uppercase }}
               </div>
               <app-item-actions
                 *ngIf="isAuthenticated && !item.dones.loading"
@@ -47,8 +46,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
           >
             <div>
-              <!-- <i class="icons bi-2-circle-fill platinium"></i> -->
-              {{ item.second }}
+              {{ item.second | uppercase }}
             </div>
             <app-item-actions
               *ngIf="isAuthenticated && !item.dones.loading"
@@ -64,8 +62,7 @@ import { MarkAsDone } from 'src/app/types/mark_as_done.type';
             class="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
           >
             <div>
-              <!-- <i class="icons bi-3-circle-fill bronce"></i> -->
-              {{ item.third }}
+              {{ item.third | uppercase }}
             </div>
             <app-item-actions
               *ngIf="isAuthenticated && !item.dones.loading"

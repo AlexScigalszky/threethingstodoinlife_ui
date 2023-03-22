@@ -6,6 +6,7 @@
     *ngIf="userName$ | async as userName"
   >
     <a class="navbar-brand">{{ userName }}</a>
+    <a [routerLink]="'todos'">To Dos</a>
     <form class="form-inline">
       <button
         class="btn btn-outline-ligth my-2 my-sm-0"

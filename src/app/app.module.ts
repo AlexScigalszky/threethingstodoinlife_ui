@@ -28,6 +28,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { IndexComponent } from './pages/index/index.component';
 import { ItemActionsComponent } from './components/item-actions/item-actions.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { TodosComponent } from './pages/todos/todos.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     IndexComponent,
     ItemActionsComponent,
     SpinnerComponent,
+    TodosComponent,
   ],
   imports: [
     BrowserModule,
